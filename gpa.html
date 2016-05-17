@@ -1,0 +1,840 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>GPA Calculator</title>
+<meta name="description" content="GPA Calculator" />
+<meta name="author" content="Abdulrahman AlQallaf" />
+<style type="text/css">
+textarea {
+  width: 100px;
+  height: 18px;
+  resize: none;
+}
+
+<!-- /* 
+        Blue Dream
+        Written by Teylor Feliz  http://www.admixweb.com
+   */
+-->
+table {
+  background: #D3E4E5;
+  border: 1px solid gray;
+  border-collapse: collapse;
+  color: #fff;
+  font: normal 12px verdana, arial, helvetica, sans-serif;
+}
+
+caption {
+  border: 1px solid #5C443A;
+  color: #5C443A;
+  font-weight: bold;
+  letter-spacing: 20px;
+  padding: 6px 4px 8px 0px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+td,th {
+  color: #363636;
+  padding: .4em;
+  font-size: 110%;
+}
+
+tr {
+  border: 1px dotted gray;
+}
+
+thead th,tfoot th {
+  background: #005C5C;
+  color: #FFFFFF;
+  padding: 3px 10px 3px 10px;
+  text-align: left;
+}
+
+tbody td a {
+  color: #363636;
+  text-decoration: none;
+}
+
+tbody td a:visited {
+  color: gray;
+  text-decoration: line-through;
+}
+
+tbody td a:hover {
+  text-decoration: underline;
+}
+
+tbody th a {
+  color: #363636;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+tbody th a:hover {
+  color: #363636;
+}
+
+tbody td+td+td+td a {
+  background-image: url('bullet_blue.png');
+  background-position: left center;
+  background-repeat: no-repeat;
+  color: #03476F;
+  padding-left: 15px;
+}
+
+tbody td+td+td+td a:visited {
+  background-image: url('bullet_white.png');
+  background-position: left center;
+  background-repeat: no-repeat;
+}
+
+tbody th,tbody td {
+  text-align: left;
+  vertical-align: top;
+}
+
+tfoot td {
+  background: #5C443A;
+  color: #FFFFFF;
+  padding-top: 3px;
+}
+
+.odd {
+  background: #fff;
+}
+
+tbody tr:hover {
+  background: #99BCBF;
+  border: 1px solid #03476F;
+  color: #000000;
+}
+</style>
+
+</head>
+
+<body>
+  <table align="center">
+    <thead>
+      <tr>
+        <th><b>No.</b></th>
+
+        <th><b>Previous Grade</b></th>
+
+        <th><b>Grade</b></th>
+
+        <th><b>Weight</b></th>
+      </tr>
+    </thead>
+
+    <tr>
+      <td><b>1.</b></td>
+
+      <td><select id="repeatedGrade1">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade1">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight1">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td><b>2.</b></td>
+
+      <td><select id="repeatedGrade2">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade2">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight2">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td><b>3.</b></td>
+
+      <td><select id="repeatedGrade3">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade3">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight3">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td><b>4.</b></td>
+
+      <td><select id="repeatedGrade4">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade4">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight4">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td><b>5.</b></td>
+
+      <td><select id="repeatedGrade5">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade5">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight5">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td><b>6.</b></td>
+
+      <td><select id="repeatedGrade6">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade6">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight6">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td><b>7.</b></td>
+
+      <td><select id="repeatedGrade7">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade7">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight7">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td><b>8.</b></td>
+
+      <td><select id="repeatedGrade8">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade8">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight8">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td><b>9.</b></td>
+
+      <td><select id="repeatedGrade9">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade9">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight9">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td><b>10.</b></td>
+
+      <td><select id="repeatedGrade10">
+          <option selected="selected">Previous Grade</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><select id="grade10">
+          <option selected="selected">Grade</option>
+
+          <option value="A">A</option>
+
+          <option value="A-">A-</option>
+
+          <option value="B+">B+</option>
+
+          <option value="B">B</option>
+
+          <option value="B-">B-</option>
+
+          <option value="C+">C+</option>
+
+          <option value="C">C</option>
+
+          <option value="C-">C-</option>
+
+          <option value="D+">D+</option>
+
+          <option value="D">D</option>
+
+          <option value="F">F</option>
+
+          <option value="FA">FA</option>
+      </select></td>
+
+      <td><textarea id="weight10">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td colspan="4"><strong>Enter your GPA</strong>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <textarea id="oldGPA">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td colspan="4"><strong>Enter your total units</strong>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <textarea id="totalUnits">
+</textarea></td>
+    </tr>
+
+    <tr>
+      <td colspan="4">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+        type="button" value="Submit" onclick="semesterGPA()" /></td>
+    </tr>
+
+    <tr>
+      <td colspan="4" id="result"><b>Your semester GPA is <font
+          color="#005C5C">...</font> </b></td>
+    </tr>
+
+    <tr>
+      <td colspan="4" id="result2"><b>Your cumulative GPA is <font
+          color="#005C5C">...</font> </b></td>
+    </tr>
+
+    <tr>
+      <td colspan="4" id="result3"><b>The number of your total
+          units is <font color="#005C5C">...</font> </b></td>
+    </tr>
+  </table>
+  <script type="text/javascript">
+    // converts the grades from letters to points
+        function convert2Points(grade)
+        {
+                switch(grade)
+                {
+                        case "A": return(4.00);
+                        case "A-": return(3.67);
+                        case "B+": return(3.33);
+                        case "B": return(3.00);
+                        case "B-": return(2.67);
+                        case "C+": return(2.33);
+                        case "C": return(2.00);
+                        case "C-": return(1.67);
+                        case "D+": return(1.33);
+                        case "D": return(1.00);
+                        case "F": return(0.00);
+                        case "FA": return(0.00);
+                }       
+        }       
+        
+        // fills the grades[] array and sets the numberOfCourses variable to the correct value
+        function fillGradesAndValidate()
+        {
+                grades = [];
+                // inserting the values
+                grades[0] = document.getElementById("grade1").value;
+                grades[1] = document.getElementById("grade2").value;    
+                grades[2] = document.getElementById("grade3").value;
+                grades[3] = document.getElementById("grade4").value;
+                grades[4] = document.getElementById("grade5").value;
+                grades[5] = document.getElementById("grade6").value;
+                grades[6] = document.getElementById("grade7").value;
+                grades[7] = document.getElementById("grade8").value;
+                grades[8] = document.getElementById("grade9").value;
+                grades[9] = document.getElementById("grade10").value;
+                // checking the values and converting to points
+                for (var i=0; i<maxCourses; i++)
+                {
+                        if (grades[i] == "Grade")
+                        {
+                                return;
+                        }               
+                        else
+                        {
+                                grades[i] = convert2Points(grades[i]);          
+                                numberOfCourses++;
+                        }
+                }
+        }
+        
+        // fills the credits[] array and checks to see if the fields are empty
+        function fillCreditsAndValidate()
+        {
+                credits = [];
+                // inserting the values
+                credits[0] = document.getElementById("weight1").value;
+                credits[1] = document.getElementById("weight2").value;  
+                credits[2] = document.getElementById("weight3").value;
+                credits[3] = document.getElementById("weight4").value;
+                credits[4] = document.getElementById("weight5").value;
+                credits[5] = document.getElementById("weight6").value;
+                credits[6] = document.getElementById("weight7").value;
+                credits[7] = document.getElementById("weight8").value;
+                credits[8] = document.getElementById("weight9").value;
+                credits[9] = document.getElementById("weight10").value;
+                // checking the values and converting to integers
+                if (document.getElementById("grade1").value == "Grade")
+                {
+                        alert("Error, Enter data in the table first then click submit !");
+                        return (false);
+                }
+                for (var i=0; i<numberOfCourses; i++)
+                {
+                        if (credits[i]==null || credits[i]=="")
+                        {
+                                alert("Error, check the weights !");
+                                return (false);                 
+                        }               
+                        else
+                        {
+                                credits[i] = parseInt(credits[i]);                      
+                        }
+                }
+                return (true);
+        }
+        
+        // calculates the sub-points for the semester GPA
+        function calculate()
+        {
+                var result = 0.00;
+                
+                for(var i=0; i<numberOfCourses; i++)
+                {
+                        result += credits[i]*grades[i];
+                }
+                
+                return(result);
+        }       
+        
+        // calculates the sub-Units for the semester GPA
+        function sumOfCredits()
+        {
+                var sum = 0;
+                
+                for(var i=0; i<numberOfCourses; i++)
+                {
+                        sum += credits[i];              
+                }
+                
+                return (sum);
+        }
+        
+        // checks for repeated grades and fills the repeated[] array
+        function repeatedGrades()
+        {
+                var repeated = [];
+                // inserting the values
+                repeated[0] = document.getElementById("repeatedGrade1").value;
+                repeated[1] = document.getElementById("repeatedGrade2").value;
+                repeated[2] = document.getElementById("repeatedGrade3").value;
+                repeated[3] = document.getElementById("repeatedGrade4").value;
+                repeated[4] = document.getElementById("repeatedGrade5").value;
+                repeated[5] = document.getElementById("repeatedGrade6").value;
+                repeated[6] = document.getElementById("repeatedGrade7").value;
+                repeated[7] = document.getElementById("repeatedGrade8").value;
+                repeated[8] = document.getElementById("repeatedGrade9").value;
+                repeated[9] = document.getElementById("repeatedGrade10").value; 
+                // checking values and calculating the deletedPoints and the deletedUnits to be substracted for the cumulative GPA
+                deletedPoints = 0.0;
+                deletedUnits = 0;
+                for(var i=0; i<numberOfCourses; i++)
+                {
+                        if (repeated[i] != "Previous Grade")
+                        {
+                                repeated[i] = convert2Points(repeated[i]);
+                                deletedPoints += repeated[i];
+                                deletedUnits += credits[i];                     
+                        }
+                }
+        }
+
+        // global variables
+        subPoints=0;
+        subUnits=0;
+        maxCourses=10;  
+        
+        // calculates the cumulative GPA
+        function cumulativeGPA()
+        {
+            // do nothing if the fields are empty
+                if (document.getElementById("oldGPA").value==null || document.getElementById("oldGPA").value=="" || document.getElementById("totalUnits").value==null || document.getElementById("totalUnits").value=="")
+                {
+                        return;
+                }
+                else
+                {
+                    var totalUnits = subUnits + parseInt(document.getElementById("totalUnits").value); 
+                        var totalPoints = subPoints + (parseFloat(document.getElementById("oldGPA").value)*parseInt(document.getElementById("totalUnits").value));
+                        totalUnits -= deletedUnits;
+                        totalPoints -= deletedPoints;
+                        var GPA = Math.round((totalPoints/totalUnits)*1000)/1000;
+                        document.getElementById("result2").innerHTML = "<b>Your cumulative GPA = <font color=&quot;blue&quot;>"+GPA+"<\/font><\/b>";
+                        document.getElementById("result3").innerHTML = "<b>The number of your total units = <font color=&quot;blue&quot;>"+totalUnits+"<\/font><\/b>";
+                }
+        }       
+        
+        // calculates the semester GPA
+        function semesterGPA()
+        {
+                numberOfCourses = 0;
+                fillGradesAndValidate();
+                if (fillCreditsAndValidate() == true)
+                {
+                        repeatedGrades();
+                        subPoints = calculate();
+                        subUnits = sumOfCredits();
+                        var result = subPoints / subUnits;
+                        result = Math.round(result*1000)/1000;
+                        document.getElementById("result").innerHTML = "<b>Your semester GPA = <font color=&quot;blue&quot;>"+result+"<\/font><\/b>";
+                        cumulativeGPA();
+                }
+        }
+   </script>
+</body>
+</html>

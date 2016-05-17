@@ -1,0 +1,506 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>AI Project</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript" src="popup.js"></script>
+
+<script type="text/javascript">
+//global variables
+var attemptedMoves = 0;
+
+var backStack = new Array();
+
+var easy1 = [
+        ["A", "B", "F"],
+        ["E", "C", "I"],
+        ["G", "H", "D"]
+    ];
+
+var easy2 = [
+        ["H", "B", "C"],
+        ["A", "D", "E"],
+        ["F", "I", "G"]
+    ];
+
+var easy3 = [
+        ["A", "H", "I"],
+        ["F", "D", "C"],
+        ["G", "E", "B"]
+    ];
+
+var easy4 = [
+        ["A", "B", "I"],
+        ["D", "E", "C"],
+        ["H", "F", "G"]
+    ];
+
+var easy5 = [
+        ["A", "B", "F"],
+        ["E", "I", "D"],
+        ["C", "G", "H"]
+    ];
+
+var easy6 = [
+        ["D", "B", "H"],
+        ["I", "E", "C"],
+        ["A", "G", "F"]
+    ];
+
+var easy7 = [
+        ["A", "B", "I"],
+        ["D", "E", "C"],
+        ["F", "G", "H"]
+    ];
+
+var arr = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""]
+    ];
+
+
+var goal = [
+        ["A", "B", "C"],
+        ["D", "E", "F"],
+        ["G", "H", "I"]
+    ];
+
+
+function add2BackStack (operator)
+{
+	switch (operator)
+	{
+		case "shiftUp_1":
+			backStack.push("shiftDown_1");
+			break;
+		case "shiftUp_2":
+			backStack.push("shiftDown_2");
+			break;
+		case "shiftUp_3":
+			backStack.push("shiftDown_3");
+			break;
+		case "shiftDown_1":
+			backStack.push("shiftUp_1");
+			break;
+		case "shiftDown_2":
+			backStack.push("shiftUp_2");
+			break;
+		case "shiftDown_3":
+			backStack.push("shiftUp_3");
+			break;
+		case "shiftRight_1":
+			backStack.push("shiftLeft_1");
+			break;
+		case "shiftRight_2":
+			backStack.push("shiftLeft_2");
+			break;
+		case "shiftRight_3":
+			backStack.push("shiftLeft_3");
+			break;
+		case "shiftLeft_1":
+			backStack.push("shiftRight_1");
+			break;
+		case "shiftLeft_2":
+			backStack.push("shiftRight_2");
+			break;
+		case "shiftLeft_3":
+			backStack.push("shiftRight_3");
+			break;
+	}
+}
+
+
+function back()
+{
+	var operator = backStack.pop();
+
+	switch (operator)
+	{
+		case "shiftUp_1":
+			shiftUp(0, 1);
+			break;
+		case "shiftUp_2":
+			shiftUp(1, 1);
+			break;
+		case "shiftUp_3":
+			shiftUp(2, 1);
+			break;
+		case "shiftDown_1":
+			shiftDown(0, 1);
+			break;
+		case "shiftDown_2":
+			shiftDown(1, 1);
+			break;
+		case "shiftDown_3":
+			shiftDown(2, 1);
+			break;
+		case "shiftRight_1":
+			shiftRight(0, 1);
+			break;
+		case "shiftRight_2":
+			shiftRight(1, 1);
+			break;
+		case "shiftRight_3":
+			shiftRight(2, 1);
+			break;
+		case "shiftLeft_1":
+			shiftLeft(0, 1);
+			break;
+		case "shiftLeft_2":
+			shiftLeft(1, 1);
+			break;
+		case "shiftLeft_3":
+			shiftLeft(2, 1);
+			break;
+	}
+}
+
+
+function check (checkArray)
+{
+	for (var i=0; i<3; i++)
+	{
+		for (var j=0; j<3; j++)
+		{
+			if (checkArray[i][j] != goal[i][j])
+				return;
+		}
+	}
+
+	popup('<p>Congratulations !!!</br></br></br>You have won the game :D</p>');
+}
+
+function initialize()
+{
+	var r = Math.floor((Math.random()*7)+1);
+
+	switch(r)
+	{
+		case 1:
+			document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy1[0][0];
+			document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy1[0][1];
+			document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy1[0][2];
+			document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy1[1][0];
+			document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy1[1][1];
+			document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy1[1][2];
+			document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy1[2][0];
+			document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy1[2][1];
+			document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy1[2][2];
+			break;
+
+		case 2:
+			document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy2[0][0];
+			document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy2[0][1];
+			document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy2[0][2];
+			document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy2[1][0];
+			document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy2[1][1];
+			document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy2[1][2];
+			document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy2[2][0];
+			document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy2[2][1];
+			document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy2[2][2];
+		break;
+
+		case 3:
+			document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy3[0][0];
+			document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy3[0][1];
+			document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy3[0][2];
+			document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy3[1][0];
+			document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy3[1][1];
+			document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy3[1][2];
+			document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy3[2][0];
+			document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy3[2][1];
+			document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy3[2][2];
+		break;
+
+		case 4:
+			document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy4[0][0];
+			document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy4[0][1];
+			document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy4[0][2];
+			document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy4[1][0];
+			document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy4[1][1];
+			document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy4[1][2];
+			document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy4[2][0];
+			document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy4[2][1];
+			document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy4[2][2];
+		break;
+
+		case 5:
+			document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy5[0][0];
+			document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy5[0][1];
+			document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy5[0][2];
+			document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy5[1][0];
+			document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy5[1][1];
+			document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy5[1][2];
+			document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy5[2][0];
+			document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy5[2][1];
+			document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy5[2][2];
+		break;
+
+		case 6:
+			document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy6[0][0];
+			document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy6[0][1];
+			document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy6[0][2];
+			document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy6[1][0];
+			document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy6[1][1];
+			document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy6[1][2];
+			document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy6[2][0];
+			document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy6[2][1];
+			document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy6[2][2];
+		break;
+
+		case 7:
+			document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy7[0][0];
+			document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy7[0][1];
+			document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy7[0][2];
+			document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy7[1][0];
+			document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy7[1][1];
+			document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy7[1][2];
+			document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy7[2][0];
+			document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy7[2][1];
+			document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy7[2][2];
+		break;
+
+		default:
+			document.getElementById("arr[0][0]").innerHTML = arr[0][0] = "A";
+			document.getElementById("arr[0][1]").innerHTML = arr[0][1] = "B";
+			document.getElementById("arr[0][2]").innerHTML = arr[0][2] = "C";
+			document.getElementById("arr[1][0]").innerHTML = arr[1][0] = "D";
+			document.getElementById("arr[1][1]").innerHTML = arr[1][1] = "E";
+			document.getElementById("arr[1][2]").innerHTML = arr[1][2] = "F";
+			document.getElementById("arr[2][0]").innerHTML = arr[2][0] = "G";
+			document.getElementById("arr[2][1]").innerHTML = arr[2][1] = "H";
+			document.getElementById("arr[2][2]").innerHTML = arr[2][2] = "I";
+	}
+}
+
+function shiftUp(colNum, backFlag)
+{
+	var temp;
+
+	// swapping 
+	temp = arr[2][colNum];
+	arr[2][colNum] = arr[1][colNum];
+	arr[1][colNum] = temp;
+
+	// swapping 
+	temp = arr[0][colNum];
+	arr[0][colNum] = arr[2][colNum];
+	arr[2][colNum] = temp;
+
+	// displaying the array on the screen
+	document.getElementById("arr[0]["+colNum+"]").innerHTML = arr[0][colNum];
+	document.getElementById("arr[1]["+colNum+"]").innerHTML = arr[1][colNum];
+	document.getElementById("arr[2]["+colNum+"]").innerHTML = arr[2][colNum];
+
+	// checking for goal state
+	check(arr);
+
+	// adding operation on stack if it's not coming from back()
+	if (backFlag == 0)
+	{
+		add2BackStack("shiftUp_"+(colNum+1));
+		attemptedMoves++;
+		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;
+	}
+	else
+	{
+		attemptedMoves--;
+		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;
+	}
+}
+
+function shiftDown(colNum, backFlag)
+{
+	var temp;
+
+	// swapping 
+	temp = arr[0][colNum];
+	arr[0][colNum] = arr[1][colNum];
+	arr[1][colNum] = temp;
+
+	// swapping 
+	temp = arr[0][colNum];
+	arr[0][colNum] = arr[2][colNum];
+	arr[2][colNum] = temp;
+
+	// displaying the array on the screen
+	document.getElementById("arr[0]["+colNum+"]").innerHTML = arr[0][colNum];
+	document.getElementById("arr[1]["+colNum+"]").innerHTML = arr[1][colNum];
+	document.getElementById("arr[2]["+colNum+"]").innerHTML = arr[2][colNum];
+
+	//checking for goal state
+	check(arr);
+
+	// adding operation on stack if it's not coming from back()
+	if (backFlag == 0)
+	{
+		add2BackStack("shiftDown_"+(colNum+1));
+		attemptedMoves++;
+		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;
+	}
+	else
+	{
+		attemptedMoves--;
+		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;
+	}
+}
+
+function shiftRight(rowNum, backFlag)
+{
+	var temp;
+
+	// swapping 
+	temp = arr[rowNum][0];
+	arr[rowNum][0] = arr[rowNum][1];
+	arr[rowNum][1] = temp;
+
+	// swapping 
+	temp = arr[rowNum][0];
+	arr[rowNum][0] = arr[rowNum][2];
+	arr[rowNum][2] = temp;
+
+	// displaying the array on the screen
+	document.getElementById("arr["+rowNum+"][0]").innerHTML = arr[rowNum][0];
+	document.getElementById("arr["+rowNum+"][1]").innerHTML = arr[rowNum][1];
+	document.getElementById("arr["+rowNum+"][2]").innerHTML = arr[rowNum][2];
+
+	//checking for goal state
+	check(arr);
+
+	// adding operation on stack if it's not coming from back()
+	if (backFlag == 0)
+	{
+		add2BackStack("shiftRight_"+(rowNum+1));
+		attemptedMoves++;
+		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;
+	}
+	else
+	{
+		attemptedMoves--;
+		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;	
+	}
+}
+
+function shiftLeft(rowNum, backFlag)
+{
+	var temp;
+
+	// swapping 
+	temp = arr[rowNum][2];
+	arr[rowNum][2] = arr[rowNum][1];
+	arr[rowNum][1] = temp;
+
+	// swapping 
+	temp = arr[rowNum][0];
+	arr[rowNum][0] = arr[rowNum][2];
+	arr[rowNum][2] = temp;
+
+	// displaying the array on the screen
+	document.getElementById("arr["+rowNum+"][0]").innerHTML = arr[rowNum][0];
+	document.getElementById("arr["+rowNum+"][1]").innerHTML = arr[rowNum][1];
+	document.getElementById("arr["+rowNum+"][2]").innerHTML = arr[rowNum][2];
+
+	//checking for goal state
+	check(arr);
+
+	// adding operation on stack if it's not coming from back()
+	if (backFlag == 0)
+	{
+		add2BackStack("shiftLeft_"+(rowNum+1));
+		attemptedMoves++;
+		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;
+	}
+	else
+	{
+		attemptedMoves--;
+		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;	
+	}
+}
+
+</script>
+</head>
+<body onload="initialize()" background="blue_and_white-wallpaper-1440x900.jpg">
+
+<!- Popup -->
+<div id="dialog-overlay"></div>
+<div id="dialog-box">
+	<div class="dialog-content">
+		<div id="dialog-message"></div>
+		</br></br>
+		<a href="Easy.html" onclick="location.reload();" class="button">Play Another Game</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="#" class="button">Main Menu</a>
+	</div>
+</div>
+
+
+<!- Puzzle Table -->
+<table align="left" background="Soft White.jpg" style="font-family: COMIC SANS MS;">
+	<tr>
+		<td></td>
+		<td> <input type="image" src="up.png" onclick="shiftUp(0,0)" width=100 height=100 /> </td>
+		<td> <input type="image" src="up.png" onclick="shiftUp(1,0)" width=100 height=100 /> </td>
+		<td> <input type="image" src="up.png" onclick="shiftUp(2,0)" width=100 height=100 /> </td>
+		<td ></td>
+	</tr>
+	<tr>
+		<td> <input type="image" src="left.png" onclick="shiftLeft(0, 0)" width=100 height=100 /> </td>
+		<td align="center" id="arr[0][0]"></td>
+		<td align="center" id="arr[0][1]"></td>
+		<td align="center" id="arr[0][2]"></td>
+		<td> <input type="image" src="right.png" onclick="shiftRight(0, 0)" width=100 height=100 /> </td>
+	</tr>
+	<tr>
+		<td> <input type="image" src="left.png" onclick="shiftLeft(1, 0)" width=100 height=100 /> </td>
+		<td align="center" id="arr[1][0]"></td>
+		<td align="center" id="arr[1][1]"></td>
+		<td align="center" id="arr[1][2]"></td>
+		<td> <input type="image" src="right.png" onclick="shiftRight(1, 0)" width=100 height=100 /> </td>
+	</tr>
+	<tr>
+		<td> <input type="image" src="left.png" onclick="shiftLeft(2, 0)" width=100 height=100 /> </td>
+		<td align="center" id="arr[2][0]"></td>
+		<td align="center" id="arr[2][1]"></td>
+		<td align="center" id="arr[2][2]"></td>
+		<td> <input type="image" src="right.png" onclick="shiftRight(2, 0)" width=100 height=100 /> </td>
+	</tr>
+	<tr>
+		<td></td>
+		<td> <input type="image" src="down.png" onclick="shiftDown(0, 0)" width=100 height=100 /> </td>
+		<td> <input type="image" src="down.png" onclick="shiftDown(1, 0)" width=100 height=100 /> </td>
+		<td> <input type="image" src="down.png" onclick="shiftDown(2, 0)" width=100 height=100 /> </td>
+		<td></td>
+	</tr>
+</table>
+
+<p align="center">
+	<h1 align="center" color=#0059b0>Goal State</h1>
+</p>
+<table align="center" background="Soft White.jpg" style="font-size: 30px; font-family: COMIC SANS MS;">
+	<tr>
+		<td> A </td>
+		<td> B </td>
+		<td> C </td>
+	</tr>
+	<tr>
+		<td> D </td>
+		<td> E </td>
+		<td> F </td>
+	</tr>
+	<tr>
+		<td> G </td>
+		<td> H </td>
+		<td> I </td>
+	</tr>
+</table>
+
+<p align="center" style="font-size: 35px; font-family: Courier New";>
+</br>
+<h1 align="center" style="color: white">Number of optimal moves = 3&nbsp;&nbsp;</h1>
+<h1 align="center" id="attemptedMoves" style="color: white">Number of attempted moves = 0</h1>
+</p>
+<p align="center">
+<a href="#" onclick="back();" class="button" style="padding: 5px 60px 6px;">Back</a>
+</p>
+</body>
+</html>

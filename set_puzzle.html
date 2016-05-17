@@ -1,0 +1,594 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>AI Project</title>
+<link rel="stylesheet" type="text/css" href="style.css" />
+<script type="text/javascript" src="popup.js"></script>
+<script type="text/javascript">
+//global variables
+var tree_parent = new Array(1948717);
+var tree_direction = new Array(1948717);
+
+var initial = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""]
+    ];
+
+var goal = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""]
+    ];
+
+var arr = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""]
+    ];
+
+function shiftUp(colNum)
+{
+	alert('shiftup()');
+
+	var temp;
+
+	// swapping 
+	temp = arr[2][colNum];
+	arr[2][colNum] = arr[1][colNum];
+	arr[1][colNum] = temp;
+
+	// swapping 
+	temp = arr[0][colNum];
+	arr[0][colNum] = arr[2][colNum];
+	arr[2][colNum] = temp;
+}
+
+function shiftDown(colNum)
+{
+	alert('shiftdown()');
+
+	var temp;
+
+	// swapping 
+	temp = arr[0][colNum];
+	arr[0][colNum] = arr[1][colNum];
+	arr[1][colNum] = temp;
+
+	// swapping 
+	temp = arr[0][colNum];
+	arr[0][colNum] = arr[2][colNum];
+	arr[2][colNum] = temp;
+}
+
+function shiftRight(rowNum)
+{
+	alert('shiftright()');
+
+	var temp;
+
+	// swapping 
+	temp = arr[rowNum][0];
+	arr[rowNum][0] = arr[rowNum][1];
+	arr[rowNum][1] = temp;
+
+	// swapping 
+	temp = arr[rowNum][0];
+	arr[rowNum][0] = arr[rowNum][2];
+	arr[rowNum][2] = temp;
+}
+
+function shiftLeft(rowNum)
+{
+	alert('shiftleft()');
+
+	var temp;
+
+	// swapping 
+	temp = arr[rowNum][2];
+	arr[rowNum][2] = arr[rowNum][1];
+	arr[rowNum][1] = temp;
+
+	// swapping 
+	temp = arr[rowNum][0];
+	arr[rowNum][0] = arr[rowNum][2];
+	arr[rowNum][2] = temp;
+}
+
+function initialize()
+{
+	alert('initialize()');
+
+	initial[0][0] = document.getElementById("initial[0][0]").value;
+	initial[0][1] = document.getElementById("initial[0][1]").value;
+	initial[0][2] = document.getElementById("initial[0][2]").value;
+	initial[1][0] = document.getElementById("initial[1][0]").value;
+	initial[1][1] = document.getElementById("initial[1][1]").value;
+	initial[1][2] = document.getElementById("initial[1][2]").value;
+	initial[2][0] = document.getElementById("initial[2][0]").value;
+	initial[2][1] = document.getElementById("initial[2][1]").value;
+	initial[2][2] = document.getElementById("initial[2][2]").value;
+
+	goal[0][0] = document.getElementById("goal[0][0]").value;
+	goal[0][1] = document.getElementById("goal[0][1]").value;
+	goal[0][2] = document.getElementById("goal[0][2]").value;
+	goal[1][0] = document.getElementById("goal[1][0]").value;
+	goal[1][1] = document.getElementById("goal[1][1]").value;
+	goal[1][2] = document.getElementById("goal[1][2]").value;
+	goal[2][0] = document.getElementById("goal[2][0]").value;
+	goal[2][1] = document.getElementById("goal[2][1]").value;
+	goal[2][2] = document.getElementById("goal[2][2]").value;
+}
+
+/* PROBLEM HERE !!! */
+function set_children(first1, parent, level)
+{
+	alert('set_children()');
+
+	if (parent == 0)
+	{
+		tree_parent[parent] = 0;
+		tree_direction[parent+0] = "u0";
+		tree_direction[parent+1] = "u1";
+		tree_direction[parent+2] = "u2";
+		tree_direction[parent+3] = "d0";
+		tree_direction[parent+4] = "d1";
+		tree_direction[parent+5] = "d2";
+		tree_direction[parent+6] = "r0";
+		tree_direction[parent+7] = "r1";
+		tree_direction[parent+8] = "r2";
+		tree_direction[parent+9] = "l0";
+		tree_direction[parent+10] = "l1";
+		tree_direction[parent+11] = "l2";
+	}
+	else if (level < 6)
+	{
+		// setting children to point to parent
+		var iterate1 = first1 + Math.pow(11,level);
+		iterate1 += (11*(parent-1))+(parent-1);
+		for (var i=0; i<11; i++)
+		{
+			tree_parent[iterate1] = parent;
+			iterate1++;
+		}
+
+		// setting children's operations
+		var iterate2 = first1 + Math.pow(11,level);
+		iterate2 += (11*(parent-1))+(parent-1);
+		switch (tree_direction[parent])
+		{
+			case "u0":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "u2";
+				tree_direction[iterate2+3] = "d1";
+				tree_direction[iterate2+4] = "d2";
+				tree_direction[iterate2+5] = "r0";
+				tree_direction[iterate2+6] = "r1";
+				tree_direction[iterate2+7] = "r2";
+				tree_direction[iterate2+8] = "l0";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "u1":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "u2";
+				tree_direction[iterate2+3] = "d0";
+				tree_direction[iterate2+4] = "d2";
+				tree_direction[iterate2+5] = "r0";
+				tree_direction[iterate2+6] = "r1";
+				tree_direction[iterate2+7] = "r2";
+				tree_direction[iterate2+8] = "l0";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "u2":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "u2";
+				tree_direction[iterate2+3] = "d0";
+				tree_direction[iterate2+4] = "d1";
+				tree_direction[iterate2+5] = "r0";
+				tree_direction[iterate2+6] = "r1";
+				tree_direction[iterate2+7] = "r2";
+				tree_direction[iterate2+8] = "l0";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "d0":
+				tree_direction[iterate2+0] = "u1";
+				tree_direction[iterate2+1] = "u2";
+				tree_direction[iterate2+2] = "d0";
+				tree_direction[iterate2+3] = "d1";
+				tree_direction[iterate2+4] = "d2";
+				tree_direction[iterate2+5] = "r0";
+				tree_direction[iterate2+6] = "r1";
+				tree_direction[iterate2+7] = "r2";
+				tree_direction[iterate2+8] = "l0";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "d1":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u2";
+				tree_direction[iterate2+2] = "d0";
+				tree_direction[iterate2+3] = "d1";
+				tree_direction[iterate2+4] = "d2";
+				tree_direction[iterate2+5] = "r0";
+				tree_direction[iterate2+6] = "r1";
+				tree_direction[iterate2+7] = "r2";
+				tree_direction[iterate2+8] = "l0";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "d2":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "d0";
+				tree_direction[iterate2+3] = "d1";
+				tree_direction[iterate2+4] = "d2";
+				tree_direction[iterate2+5] = "r0";
+				tree_direction[iterate2+6] = "r1";
+				tree_direction[iterate2+7] = "r2";
+				tree_direction[iterate2+8] = "l0";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "r0":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "u2";
+				tree_direction[iterate2+3] = "d0";
+				tree_direction[iterate2+4] = "d1";
+				tree_direction[iterate2+5] = "d2";
+				tree_direction[iterate2+6] = "r0";
+				tree_direction[iterate2+7] = "r1";
+				tree_direction[iterate2+8] = "r2";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "r1":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "u2";
+				tree_direction[iterate2+3] = "d0";
+				tree_direction[iterate2+4] = "d1";
+				tree_direction[iterate2+5] = "d2";
+				tree_direction[iterate2+6] = "r0";
+				tree_direction[iterate2+7] = "r1";
+				tree_direction[iterate2+8] = "r2";
+				tree_direction[iterate2+9] = "l0";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "r2":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "u2";
+				tree_direction[iterate2+3] = "d0";
+				tree_direction[iterate2+4] = "d1";
+				tree_direction[iterate2+5] = "d2";
+				tree_direction[iterate2+6] = "r0";
+				tree_direction[iterate2+7] = "r1";
+				tree_direction[iterate2+8] = "r2";
+				tree_direction[iterate2+9] = "l0";
+				tree_direction[iterate2+10] = "l1";
+			break;
+
+			case "l0":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "u2";
+				tree_direction[iterate2+3] = "d0";
+				tree_direction[iterate2+4] = "d1";
+				tree_direction[iterate2+5] = "d2";
+				tree_direction[iterate2+6] = "r1";
+				tree_direction[iterate2+7] = "r2";
+				tree_direction[iterate2+8] = "l0";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "l1":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "u2";
+				tree_direction[iterate2+3] = "d0";
+				tree_direction[iterate2+4] = "d1";
+				tree_direction[iterate2+5] = "d2";
+				tree_direction[iterate2+6] = "r0";
+				tree_direction[iterate2+7] = "r2";
+				tree_direction[iterate2+8] = "l0";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			case "l2":
+				tree_direction[iterate2+0] = "u0";
+				tree_direction[iterate2+1] = "u1";
+				tree_direction[iterate2+2] = "u2";
+				tree_direction[iterate2+3] = "d0";
+				tree_direction[iterate2+4] = "d1";
+				tree_direction[iterate2+5] = "d2";
+				tree_direction[iterate2+6] = "r0";
+				tree_direction[iterate2+7] = "r1";
+				tree_direction[iterate2+8] = "l0";
+				tree_direction[iterate2+9] = "l1";
+				tree_direction[iterate2+10] = "l2";
+			break;
+
+			default: alert('Error in set_children() !!!');
+		}
+	}
+	alert('done set_children() !!!');
+}
+
+function check_goal(node)
+{
+	alert('check_goal()');
+
+	var stack = new Array();
+
+	// get moves	
+	while(tree_parent[node] != 0)
+	{
+		stack.push(tree_direction[node]);
+		node = tree_parent[node];
+	}
+	stack.push(tree_direction[node]);
+
+	// apply moves
+	for (var i=0; i<3; i++)
+	{
+		for (var j=0; j<3; j++)
+		{
+			arr[i][j] = initial[i][j];
+		}
+	}
+	var moves = stack.length;
+	while (stack.length)
+	{	
+		switch (stack.pop())
+		{
+			case "u0" :
+				shiftUp(0);
+			break;
+			case "u1" :
+				shiftUp(1);
+			break;
+			case "u2" :
+				shiftUp(2);
+			break;
+			case "d0" :
+				shiftDown(0);
+			break;
+			case "d1" :
+				shiftDown(1);
+			break;
+			case "d2" :
+				shiftDown(2);
+			break;
+			case "r0" :
+				shiftRight(0);
+			break;
+			case "r1" :
+				shiftRight(1);
+			break;
+			case "r2" :
+				shiftRight(2);
+			break;
+			case "l0" :
+				shiftLeft(0);
+			break;
+			case "l1" :
+				shiftLeft(1);
+			break;
+			case "l2" :
+				shiftLeft(2);
+			break;
+
+			defualt : alert('Error in check_goal() !!!');
+		}
+	}
+
+	// check for goal
+	var check = true;
+	for (var i=0; i<3; i++)
+	{
+		for (var j=0; j<3; j++)
+		{
+			if (arr[i][j] != goal[i][j])
+				check = false;
+		}
+	}
+
+	// popup result
+	if (check == true)
+	{
+		alert('The solution can be achieved in ' + moves + ' moves :-)');
+		return true;
+	}
+	else
+		return false;
+}
+
+// Magic, Don't touch !!!
+function goal_search()
+{
+	alert('goal_search()');
+
+	var level = 0;
+	for (var i=0; level<7; i+=Math.pow(11,level))
+	{
+		for (var j=i; j<i+Math.pow(11,level); j++)
+		{
+			// set children to parent and initialize them
+			set_children(i, j, level);
+
+			// check if goal is reached and output the result
+			if (check_goal(j) == true)
+				return;
+		}
+
+		level++;
+	}
+	alert('Sorry, no solution can be found :-(');
+}
+
+function submit()
+{
+	alert('submit()');
+
+	// initialize the initial[][] and the goal[][] matrices
+	initialize();
+
+	// check if goal = initial
+	var check = true;
+	for (var i=0; i<3; i++)
+	{
+		for (var j=0; j<3; j++)
+		{
+			if (initial[i][j] != goal[i][j])
+				check = false;
+		}
+	}
+
+	// popup result
+	if (check == true)
+		alert('The solution can be achieved in 0 moves :-)');
+	else
+		goal_search();
+}
+</script>
+</head>
+<body background="blue_and_white-wallpaper-1440x900.jpg">
+
+
+<!- Popup after submitting -->
+<div id="dialog-overlay"></div>
+<div id="dialog-box3">
+	<div class="dialog-content3">
+		<p>
+			<a href="set_puzzle.html" onclick="location.reload();" class="button" style="padding: 5px 106px 6px; font-size:28px;">Retry</a></br></br></br>
+			<a href="main_menu.html" class="button" style="padding: 5px 57px 6px; font-size:28px;">Main Menu</a>
+		</p>
+	</div>
+</div>
+
+<table background="soft_white.jpg" style="font-family: COMIC SANS MS; float:left; margin-left:5px; margin-top:5px;">
+	<tr>
+		<td class="moves">
+			Initial
+		</td>
+		<td class="moves">
+			State
+		</td>
+	</tr>
+</table>
+
+<table background="soft_white.jpg" style="font-family: COMIC SANS MS; float:right; margin-right:5px; margin-top:5px;">
+	<tr>
+		<td class="moves">
+			Goal
+		</td>
+		<td class="moves">
+			State
+		</td>
+	</tr>
+</table>
+
+</br></br></br></br>
+
+<!- Initial State Table -->
+<table background="soft_white.jpg" style="font-family: COMIC SANS MS; float:left; margin-left:5px;">
+	<tr>
+		<td></td>
+		<td> <input type="image" src="up.png" width=100 height=100 /> </td>
+		<td> <input type="image" src="up.png" width=100 height=100 /> </td>
+		<td> <input type="image" src="up.png" width=100 height=100 /> </td>
+		<td ></td>
+	</tr>
+	<tr>
+		<td> <input type="image" src="left.png" width=100 height=100 /> </td>
+		<td align="center"> <textarea id="initial[0][0]"></textarea> </td>
+		<td align="center"> <textarea id="initial[0][1]""></textarea> </td>
+		<td align="center"> <textarea id="initial[0][2]"></textarea> </td>
+		<td> <input type="image" src="right.png" width=100 height=100 /> </td>
+	</tr>
+	<tr>
+		<td> <input type="image" src="left.png" width=100 height=100 /> </td>
+		<td align="center"> <textarea id="initial[1][0]"></textarea> </td>
+		<td align="center"> <textarea id="initial[1][1]"></textarea> </td>
+		<td align="center"> <textarea id="initial[1][2]"></textarea> </td>
+		<td> <input type="image" src="right.png" width=100 height=100 /> </td>
+	</tr>
+	<tr>
+		<td> <input type="image" src="left.png" width=100 height=100 /> </td>
+		<td align="center"> <textarea id="initial[2][0]"></textarea> </td>
+		<td align="center"> <textarea id="initial[2][1]"></textarea> </td>
+		<td align="center"> <textarea id="initial[2][2]"></textarea> </td>
+		<td> <input type="image" src="right.png" width=100 height=100 /> </td>
+	</tr>
+	<tr>
+		<td></td>
+		<td> <input type="image" src="down.png" width=100 height=100 /> </td>
+		<td> <input type="image" src="down.png" width=100 height=100 /> </td>
+		<td> <input type="image" src="down.png" width=100 height=100 /> </td>
+		<td></td>
+	</tr>
+</table>
+
+<!- Goal State Table -->
+<table background="soft_white.jpg" style="font-family: COMIC SANS MS; float:right; margin-right:5px;">
+	<tr>
+		<td></td>
+		<td> <input type="image" src="up.png" width=100 height=100 /> </td>
+		<td> <input type="image" src="up.png" width=100 height=100 /> </td>
+		<td> <input type="image" src="up.png" width=100 height=100 /> </td>
+		<td ></td>
+	</tr>
+	<tr>
+		<td> <input type="image" src="left.png" width=100 height=100 /> </td>
+		<td align="center"> <textarea id="goal[0][0]"></textarea> </td>
+		<td align="center"> <textarea id="goal[0][1]"></textarea> </td>
+		<td align="center"> <textarea id="goal[0][2]"></textarea> </td>
+		<td> <input type="image" src="right.png" width=100 height=100 /> </td>
+	</tr>
+	<tr>
+		<td> <input type="image" src="left.png" width=100 height=100 /> </td>
+		<td align="center"> <textarea id="goal[1][0]"></textarea> </td>
+		<td align="center"> <textarea id="goal[1][1]"></textarea> </td>
+		<td align="center"> <textarea id="goal[1][2]"></textarea> </td>
+		<td> <input type="image" src="right.png" width=100 height=100 /> </td>
+	</tr>
+	<tr>
+		<td> <input type="image" src="left.png" width=100 height=100 /> </td>
+		<td align="center"> <textarea id="goal[2][0]"></textarea> </td>
+		<td align="center"> <textarea id="goal[2][1]"></textarea> </td>
+		<td align="center"> <textarea id="goal[2][2]"></textarea> </td>
+		<td> <input type="image" src="right.png" width=100 height=100 /> </td>
+	</tr>
+	<tr>
+		<td></td>
+		<td> <input type="image" src="down.png" width=100 height=100 /> </td>
+		<td> <input type="image" src="down.png" width=100 height=100 /> </td>
+		<td> <input type="image" src="down.png" width=100 height=100 /> </td>
+		<td></td>
+	</tr>
+</table>
+
+<p align="center">
+</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+<a onclick="submit();" class="button" style="padding: 5px 60px 6px; font-size:28px;">Submit</a>
+</p>
+
+</body>
+</html>
