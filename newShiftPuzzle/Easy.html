@@ -1,0 +1,437 @@
+<!-- 
+you need to solve the positioning using bootstrap col span
+you need to use bootstrap modal
+you need to use bootstrap table
+
+at least the logic works
+ -->
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+	<head>
+		<title>Shift Puzzle</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<style type="text/css">
+		.center-table
+		{
+		margin: 0 auto !important;
+		float: none !important;
+		}
+
+		table { border-collapse: separate; border-spacing: 30px; } /* cellspacing="5" */
+
+		.custom {
+    		width: 300px !important;
+		}
+
+		body { 
+		    background: url(background/square_bg/square_bg_@2X.png) repeat 0 0;
+		}
+
+		</style>
+	</head>
+
+	<body>
+		<div class="container">
+			
+
+
+
+
+
+
+			<script type="text/javascript" src="popup.js"></script>
+			<script type="text/javascript" src="puzzle.js"></script>
+			<script type="text/javascript">
+
+
+			//global variables
+			var attemptedMoves = 0;
+
+			var backStack = new Array();
+
+			var easy1 = [
+			        ["A", "B", "F"],
+			        ["E", "C", "I"],
+			        ["G", "H", "D"]
+			    ];
+
+			var easy2 = [
+			        ["A", "B", "C"],
+			        ["E", "F", "D"],
+			        ["H", "I", "G"]
+			    ];
+
+			var easy3 = [
+			        ["A", "B", "I"],
+			        ["F", "D", "C"],
+			        ["G", "H", "E"]
+			    ];
+
+			var easy4 = [
+			        ["A", "B", "I"],
+			        ["D", "E", "C"],
+			        ["H", "F", "G"]
+			    ];
+
+			var easy5 = [
+			        ["A", "B", "F"],
+			        ["E", "I", "D"],
+			        ["C", "G", "H"]
+			    ];
+
+			var easy6 = [
+			        ["A", "B", "H"],
+			        ["C", "D", "E"],
+			        ["I", "G", "F"]
+			    ];
+
+			var easy7 = [
+			        ["A", "B", "I"],
+			        ["D", "E", "C"],
+			        ["F", "G", "H"]
+			    ];
+
+			var arr = [
+			        ["", "", ""],
+			        ["", "", ""],
+			        ["", "", ""]
+			    ];
+
+
+			var goal = [
+			        ["A", "B", "C"],
+			        ["D", "E", "F"],
+			        ["G", "H", "I"]
+			    ];
+
+			function initialize()
+			{
+				var r = Math.floor((Math.random()*7)+1);
+
+				switch(r)
+				{
+					case 1:
+						document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy1[0][0];
+						document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy1[0][1];
+						document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy1[0][2];
+						document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy1[1][0];
+						document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy1[1][1];
+						document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy1[1][2];
+						document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy1[2][0];
+						document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy1[2][1];
+						document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy1[2][2];
+						break;
+
+					case 2:
+						document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy2[0][0];
+						document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy2[0][1];
+						document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy2[0][2];
+						document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy2[1][0];
+						document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy2[1][1];
+						document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy2[1][2];
+						document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy2[2][0];
+						document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy2[2][1];
+						document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy2[2][2];
+					break;
+
+					case 3:
+						document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy3[0][0];
+						document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy3[0][1];
+						document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy3[0][2];
+						document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy3[1][0];
+						document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy3[1][1];
+						document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy3[1][2];
+						document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy3[2][0];
+						document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy3[2][1];
+						document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy3[2][2];
+					break;
+
+					case 4:
+						document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy4[0][0];
+						document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy4[0][1];
+						document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy4[0][2];
+						document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy4[1][0];
+						document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy4[1][1];
+						document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy4[1][2];
+						document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy4[2][0];
+						document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy4[2][1];
+						document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy4[2][2];
+					break;
+
+					case 5:
+						document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy5[0][0];
+						document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy5[0][1];
+						document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy5[0][2];
+						document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy5[1][0];
+						document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy5[1][1];
+						document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy5[1][2];
+						document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy5[2][0];
+						document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy5[2][1];
+						document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy5[2][2];
+					break;
+
+					case 6:
+						document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy6[0][0];
+						document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy6[0][1];
+						document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy6[0][2];
+						document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy6[1][0];
+						document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy6[1][1];
+						document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy6[1][2];
+						document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy6[2][0];
+						document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy6[2][1];
+						document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy6[2][2];
+					break;
+
+					case 7:
+						document.getElementById("arr[0][0]").innerHTML = arr[0][0] = easy7[0][0];
+						document.getElementById("arr[0][1]").innerHTML = arr[0][1] = easy7[0][1];
+						document.getElementById("arr[0][2]").innerHTML = arr[0][2] = easy7[0][2];
+						document.getElementById("arr[1][0]").innerHTML = arr[1][0] = easy7[1][0];
+						document.getElementById("arr[1][1]").innerHTML = arr[1][1] = easy7[1][1];
+						document.getElementById("arr[1][2]").innerHTML = arr[1][2] = easy7[1][2];
+						document.getElementById("arr[2][0]").innerHTML = arr[2][0] = easy7[2][0];
+						document.getElementById("arr[2][1]").innerHTML = arr[2][1] = easy7[2][1];
+						document.getElementById("arr[2][2]").innerHTML = arr[2][2] = easy7[2][2];
+					break;
+
+					default:
+						document.getElementById("arr[0][0]").innerHTML = arr[0][0] = "A";
+						document.getElementById("arr[0][1]").innerHTML = arr[0][1] = "B";
+						document.getElementById("arr[0][2]").innerHTML = arr[0][2] = "C";
+						document.getElementById("arr[1][0]").innerHTML = arr[1][0] = "D";
+						document.getElementById("arr[1][1]").innerHTML = arr[1][1] = "E";
+						document.getElementById("arr[1][2]").innerHTML = arr[1][2] = "F";
+						document.getElementById("arr[2][0]").innerHTML = arr[2][0] = "G";
+						document.getElementById("arr[2][1]").innerHTML = arr[2][1] = "H";
+						document.getElementById("arr[2][2]").innerHTML = arr[2][2] = "I";
+				}
+			}
+			</script>
+			</head>
+			<body onload="initialize()">
+
+
+			<!-- Popup after winning -->
+			<!-- <div id="dialog-overlay"></div>
+			<div id="dialog-box">
+				<div class="dialog-content">
+					<div id="dialog-message"></div>
+					</br></br>
+					<a href="Easy.html" onclick="location.reload();" class="button">Play Another Game</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="main_menu.html" class="button">Main Menu</a>
+				</div>
+			</div> -->
+
+			<!-- Popup after clicking on Menu -->
+<!-- 			<div id="dialog-overlay"></div>
+			<div id="dialog-box2">
+				<div class="dialog-content2">
+					<p>
+						<a href="#" onclick="$('#dialog-overlay, #dialog-box2').hide();" class="button" style="padding: 5px 100px 6px; font-size:28px;">Resume Game</a></br></br></br>
+						<a href="Easy.html" onclick="location.reload();" class="button" style="padding: 5px 106px 6px; font-size:28px;">Restart Game</a></br></br></br>
+						<a href="main_menu.html" class="button" style="padding: 5px 57px 6px; font-size:28px;">Return to Main Menu</a>
+					</p>
+				</div>
+			</div>
+ -->
+			</br></br></br>
+
+			<div class="row">
+
+				<div class="col-lg-8">
+				<!-- Puzzle Table -->
+				<table style="font-family: COMIC SANS MS; float:left; margin-left:40px;">
+					<tr>
+						<td></td>
+						<td> <input type="image" src="up.png" onclick="shiftUp(0,0)" width=100 height=100 /> </td>
+						<td> <input type="image" src="up.png" onclick="shiftUp(1,0)" width=100 height=100 /> </td>
+						<td> <input type="image" src="up.png" onclick="shiftUp(2,0)" width=100 height=100 /> </td>
+						<td ></td>
+					</tr>
+					<tr>
+						<td> <input type="image" src="left.png" onclick="shiftLeft(0, 0)" width=100 height=100 /> </td>
+						<td align="center" id="arr[0][0]"></td>
+						<td align="center" id="arr[0][1]"></td>
+						<td align="center" id="arr[0][2]"></td>
+						<td> <input type="image" src="right.png" onclick="shiftRight(0, 0)" width=100 height=100 /> </td>
+					</tr>
+					<tr>
+						<td> <input type="image" src="left.png" onclick="shiftLeft(1, 0)" width=100 height=100 /> </td>
+						<td align="center" id="arr[1][0]"></td>
+						<td align="center" id="arr[1][1]"></td>
+						<td align="center" id="arr[1][2]"></td>
+						<td> <input type="image" src="right.png" onclick="shiftRight(1, 0)" width=100 height=100 /> </td>
+					</tr>
+					<tr>
+						<td> <input type="image" src="left.png" onclick="shiftLeft(2, 0)" width=100 height=100 /> </td>
+						<td align="center" id="arr[2][0]"></td>
+						<td align="center" id="arr[2][1]"></td>
+						<td align="center" id="arr[2][2]"></td>
+						<td> <input type="image" src="right.png" onclick="shiftRight(2, 0)" width=100 height=100 /> </td>
+					</tr>
+					<tr>
+						<td></td>
+						<td> <input type="image" src="down.png" onclick="shiftDown(0, 0)" width=100 height=100 /> </td>
+						<td> <input type="image" src="down.png" onclick="shiftDown(1, 0)" width=100 height=100 /> </td>
+						<td> <input type="image" src="down.png" onclick="shiftDown(2, 0)" width=100 height=100 /> </td>
+						<td></td>
+					</tr>
+				</table>
+				</div>
+
+				<div class="col-lg-4">
+				<p align="center">
+					<h3 align="center" color=#0059b0>Goal State</h3>
+				</p>
+				<table align="center" style="font-size: 15px; font-family: COMIC SANS MS;">
+					<!-- <tr>
+						<th>
+							
+						</th>
+						<th>
+							
+						</th>
+						<th>
+							
+						</th>
+					</tr> -->
+					<tr>
+						<td> A </td>
+						<td> B </td>
+						<td> C </td>
+					</tr>
+					<tr>
+						<td> D </td>
+						<td> E </td>
+						<td> F </td>
+					</tr>
+					<tr>
+						<td> G </td>
+						<td> H </td>
+						<td> I </td>
+					</tr>
+				</table>
+
+				<p align="center" style="font-size: 15px; font-family: Courier New">
+				</br>
+				<h3 align="left" style="color: black">Number of optimal moves = 3&nbsp;&nbsp;</h3>
+				<h3 align="left" id="attemptedMoves" style="color: black">Number of attempted moves = 0</h3>
+				</p>
+
+
+
+				<p align="center">
+				</br></br></br></br>
+				<!-- <a href="#" onclick="back();" class="button" style="padding: 5px 60px 6px; font-size:28px;">Back</a> -->
+				<a href="#" onclick="back();" class="btn btn-info custom" role="button" style="padding: 5px 35px 6px; font-size:28px;">Back</a>
+				
+
+
+
+
+				<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+				<br><br>
+				<!-- <a href="#" onclick="popup2();" class="button" style="padding: 5px 60px 6px; font-size:28px;">Menu</a> -->
+				<!-- <a href="#" onclick="popup2();" class="btn btn-info custom" role="button" style="padding: 5px 35px 6px; font-size:28px;">Menu</a> -->
+
+				<!-- Trigger the modal with a button -->
+				<button type="button" class="btn btn-info custom" role="button" style="padding: 5px 35px 6px; font-size:28px;" data-toggle="modal" data-target="#myModal">Menu</button>
+
+				<!-- Modal -->
+				<div id="myModal" class="modal fade" role="dialog">
+				  <div class="modal-dialog">
+
+				    <!-- Modal content-->
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        <h4 class="modal-title">Menu</h4>
+				      </div>
+				      <div class="modal-body" style="text-align: center;">
+				        <table class="span5 center-table" rowspacing="10">
+				        	<tbody>
+				        		<tr>
+				        			<td>
+				        			<a href="Easy.html" class="btn btn-info custom" role="button" style="padding: 5px 35px 6px; font-size:28px;">Restart Game</a>
+				        			</td>
+				        		</tr>
+				        		<tr>
+				        			<td>
+				        			<a href="mainMenu.html" class="btn btn-info custom" role="button" style="padding: 5px 35px 6px; font-size:28px;">Main Menu</a>
+				        			</td>
+				        		</tr>
+				        	</tbody>
+				        </table>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      </div>
+				    </div>
+
+				  </div>
+				</div>
+
+				</p>
+
+				<!-- winning modal -->
+				<!-- Modal -->
+				<div id="winningModal" class="modal fade" role="dialog">
+				  <div class="modal-dialog">
+
+				    <!-- Modal content-->
+				    <div class="modal-content">
+				      <!-- <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal">&times;</button>
+				        <h4 class="modal-title">Menu</h4>
+				      </div> -->
+				      <div class="modal-body" style="text-align: center;">
+				      	<p>
+				      		Congratulations !!!
+				      		</br></br></br>
+				      		You have won the game :D
+				      	</p>
+				        <table class="span5 center-table" rowspacing="10">
+				        	<tbody>
+				        		<tr>
+				        			<td>
+				        			<a href="Easy.html" class="btn btn-info custom" role="button" style="padding: 5px 35px 6px; font-size:28px;">Play Another Game</a>
+				        			</td>
+				        		</tr>
+				        		<tr>
+				        			<td>
+				        			<a href="mainMenu.html" class="btn btn-info custom" role="button" style="padding: 5px 35px 6px; font-size:28px;">Main Menu</a>
+				        			</td>
+				        		</tr>
+				        	</tbody>
+				        </table>
+				      </div>
+				      <!-- <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				      </div> -->
+				    </div>
+
+				  </div>
+				</div>
+				
+
+				
+
+
+
+
+				</div>
+
+			</div>
+
+		</div>
+	</body>
+</html>

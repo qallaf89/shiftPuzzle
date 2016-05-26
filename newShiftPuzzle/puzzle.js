@@ -99,7 +99,10 @@ function check (checkArray)
 		}
 	}
 
-	popup('<p>Congratulations !!!</br></br></br>You have won the game :D</p>');
+	// popup('<p>Congratulations !!!</br></br></br>You have won the game :D</p>');
+	jQuery.noConflict(); 
+	// $('#myModal').modal('show'); 
+	 $("#winningModal").modal('show');
 }
 
 function shiftUp(colNum, backFlag)
@@ -121,8 +124,7 @@ function shiftUp(colNum, backFlag)
 	document.getElementById("arr[1]["+colNum+"]").innerHTML = arr[1][colNum];
 	document.getElementById("arr[2]["+colNum+"]").innerHTML = arr[2][colNum];
 
-	// checking for goal state
-	check(arr);
+	
 
 	// adding operation on stack if it's not coming from back()
 	if (backFlag == 0)
@@ -136,6 +138,9 @@ function shiftUp(colNum, backFlag)
 		attemptedMoves--;
 		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;
 	}
+
+	// checking for goal state
+	check(arr);
 }
 
 function shiftDown(colNum, backFlag)
@@ -157,8 +162,7 @@ function shiftDown(colNum, backFlag)
 	document.getElementById("arr[1]["+colNum+"]").innerHTML = arr[1][colNum];
 	document.getElementById("arr[2]["+colNum+"]").innerHTML = arr[2][colNum];
 
-	//checking for goal state
-	check(arr);
+	
 
 	// adding operation on stack if it's not coming from back()
 	if (backFlag == 0)
@@ -172,6 +176,9 @@ function shiftDown(colNum, backFlag)
 		attemptedMoves--;
 		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;
 	}
+
+	//checking for goal state
+	check(arr);
 }
 
 function shiftRight(rowNum, backFlag)
@@ -193,8 +200,7 @@ function shiftRight(rowNum, backFlag)
 	document.getElementById("arr["+rowNum+"][1]").innerHTML = arr[rowNum][1];
 	document.getElementById("arr["+rowNum+"][2]").innerHTML = arr[rowNum][2];
 
-	//checking for goal state
-	check(arr);
+	
 
 	// adding operation on stack if it's not coming from back()
 	if (backFlag == 0)
@@ -208,6 +214,9 @@ function shiftRight(rowNum, backFlag)
 		attemptedMoves--;
 		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;	
 	}
+
+	//checking for goal state
+	check(arr);
 }
 
 function shiftLeft(rowNum, backFlag)
@@ -229,8 +238,7 @@ function shiftLeft(rowNum, backFlag)
 	document.getElementById("arr["+rowNum+"][1]").innerHTML = arr[rowNum][1];
 	document.getElementById("arr["+rowNum+"][2]").innerHTML = arr[rowNum][2];
 
-	//checking for goal state
-	check(arr);
+	
 
 	// adding operation on stack if it's not coming from back()
 	if (backFlag == 0)
@@ -244,4 +252,7 @@ function shiftLeft(rowNum, backFlag)
 		attemptedMoves--;
 		document.getElementById("attemptedMoves").innerHTML = "Number of attempted moves = " + attemptedMoves;	
 	}
+
+	//checking for goal state
+	check(arr);
 }
